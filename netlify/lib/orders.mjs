@@ -65,6 +65,7 @@ export async function orderFromSession(sessionId) {
     currency: session.currency,
     discount: (session.total_details && session.total_details.amount_discount) || 0,
     shippingCost: (session.total_details && session.total_details.amount_shipping) || 0,
+    giftNote: (session.custom_fields || []).map((f) => (f.text && f.text.value) || (f.dropdown && f.dropdown.value) || "").filter(Boolean).join(" / ").slice(0, 500),
     status: "received",
     tracking: "",
     history: [{ status: "received", at: now }],
